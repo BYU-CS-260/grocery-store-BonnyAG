@@ -1,7 +1,5 @@
 const axios = require("axios");
-
 const products = require("./products.js");
-
 const baseURL = "http://localhost:3000";
 
 products.forEach(async (product) => {
