@@ -77,7 +77,7 @@ app.get('/api/cart', (req, res) => {
 
 // Add a product to the cart
 app.post('/api/cart/:id', (req, res) => {
-    let id = req.params.id
+    let id = req.params.id;
     let item;
     index = findItemID(id);
     if (index == -1) {
@@ -99,7 +99,6 @@ app.put('/api/cart/:id/:quantity', (req, res) => {
     if (index === -1) {
         res.status(404)
         .send("Sorry, that item doesn't exist");
-        return;
     }
     let item = cart[index];
     item.quantity = parseInt(req.params.quantity);
@@ -108,15 +107,10 @@ app.put('/api/cart/:id/:quantity', (req, res) => {
 
 // Delete a product
 app.delete('/api/cart/:id', (req, res) => {
-    let id = req.params.id;
-    let removeIndex = cart.map(product => {
-        return product.id;
-        })
-        .indexOf(id);
+    let removeIndex = findItemID(req.params.id);
     if (removeIndex === -1) {
         res.status(404)
         .send("Sorry, that product doesn't exist");
-        return;
     }
     cart.splice(removeIndex, 1);
     res.sendStatus(200);
