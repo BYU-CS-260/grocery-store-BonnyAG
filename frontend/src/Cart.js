@@ -27,6 +27,16 @@ function Cart({ cart, products, setError, updateCart }) {
         }
     }
 
+    const removeFromCart = async (id) => {
+        try {
+            await axios.delete(`${baseURL}/api/cart/${id}`);
+            updateCart();
+        } catch(error) {
+            setError("error adding a task: " + error);
+            console.log(error)
+        }
+    }
+
     return (
         <>
         {cart.map(item => (
@@ -34,7 +44,7 @@ function Cart({ cart, products, setError, updateCart }) {
                 <p>{products.find(e => e.id == item.id).name}, {item.quantity}</p>
                 <button className='margin-left' onClick={e=>decreaseQty(item.id, item.quantity)}>-</button>
                 <button onClick={e=>increaseQty(item.id, item.quantity)}>+</button> 
-                <button className='margin-left'>Remove from cart</button> 
+                <button className='margin-left' onClick={e=>removeFromCart(item.id)}>Remove from cart</button> 
             </div> 
         ))}
         </>
